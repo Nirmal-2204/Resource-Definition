@@ -1,0 +1,26 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: cloudsql-48h-db-instance-private
+entity:
+  name: cloudsql-48h-db-instance-private
+  type: postgres
+  driver_type: humanitec/terraform
+  driver_inputs:
+    values:
+      append_logs_to_error: true
+      source:
+        path: resources/cloudsql-new
+        rev: refs/heads/main
+        url: https://github.com/Nirmal-2204/google-cloud-reference-architecture.git
+      variables:
+        project_id: l-ulti-tf-48hours-d55d
+        location: us-east1 # specify region in which database instance should be created
+    secret_refs:
+      variables:
+        credentials:
+          store: your-gsm-2-secret-store
+          ref: svc-gcp-tf-48hours
+  criteria:
+    - env_id: development
+    - env_type: staging
