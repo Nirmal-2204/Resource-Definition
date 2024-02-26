@@ -1,0 +1,32 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: cloudsql-new-user
+entity:
+  name: cloudsql-new-user
+  type: postgres
+  driver_type: humanitec/terraform
+  driver_inputs:
+    values:
+      append_logs_to_error: true
+      source:
+        path: resources/cloudsql-database-new
+        rev: refs/heads/main
+        url: https://github.com/Nirmal-2204/google-cloud-reference-architecture.git
+      variables:
+        project_id: l-ulti-tf-48hours-d55d
+        instance_name: testcloudsql 
+    secret_refs:
+      variables:
+        credentials:
+          store: your-gsm-2-secret-store
+          ref: svc-gcp-tf-48hours
+        username:
+          store: your-gsm-2-secret-store
+          ref: postgres-48h-username
+        password:
+          store: your-gsm-2-secret-store
+          ref: postgres-48h-password
+    criteria:
+    - env_type: development
+    - env_type: staging
